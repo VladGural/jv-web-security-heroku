@@ -1,15 +1,12 @@
 package mate.service.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.dao.CarDao;
-import mate.exception.DataProcessingException;
 import mate.lib.Inject;
 import mate.lib.Service;
 import mate.model.Car;
 import mate.model.Driver;
-import mate.model.Manufacturer;
 import mate.service.CarService;
 
 @Service
