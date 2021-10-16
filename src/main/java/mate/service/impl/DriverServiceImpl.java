@@ -7,6 +7,7 @@ import mate.dao.DriverDao;
 import mate.exception.DataProcessingException;
 import mate.lib.Inject;
 import mate.lib.Service;
+import mate.model.Car;
 import mate.model.Driver;
 import mate.service.DriverService;
 
@@ -27,11 +28,11 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver get(Long id) {
-        try {
-            return driverDao.get(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            throw new DataProcessingException("Don't exist Driver dy id " + id, e);
+        Optional<Driver> optionalDriver = driverDao.get(id);
+        if (!optionalDriver.isPresent()) {
+            throw new RuntimeException("Don't exist Manufacturer dy id " + id);
         }
+        return optionalDriver.get();
     }
 
     @Override
