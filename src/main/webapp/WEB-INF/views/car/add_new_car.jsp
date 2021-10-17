@@ -9,6 +9,7 @@
 </head>
 <body>
     <h1>For add new Driver fill in the forms below</h1>
+    <h3 style="color: red">${errorMsg}</h3>
     <form method="post" action="${pageContext.request.contextPath}/cars/add">
         <label>Model</label><br>
         <input type="text" name="model" required><br>
