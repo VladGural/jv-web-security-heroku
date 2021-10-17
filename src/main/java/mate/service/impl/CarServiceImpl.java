@@ -22,7 +22,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car get(Long id) {
         Optional<Car> optionalCar = carDao.get(id);
-        if (!optionalCar.isPresent()) {
+        if (optionalCar.isEmpty()) {
             throw new RuntimeException("Don't exist Manufacturer dy id " + id);
         }
         return optionalCar.get();

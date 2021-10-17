@@ -20,6 +20,10 @@ public class Driver {
         this.licenseNumber = licenseNumber;
     }
 
+    public static boolean isLicenseNumberCorrect(String licenseNumber) {
+        return licenseNumber.matches("[A-Z]{2}[-][0-9]{4}");
+    }
+
     public Long getId() {
         return id;
     }

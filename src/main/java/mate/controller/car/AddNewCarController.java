@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.exception.DataCreateUpdateException;
 import mate.lib.Injector;
 import mate.model.Car;
 import mate.model.Manufacturer;
@@ -27,12 +28,16 @@ public class AddNewCarController extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Car car = new Car();
-        car.setModel(req.getParameter("model"));
-        long manufacturerId = Long.parseLong(req.getParameter("manufacturer_id"));
-        Manufacturer manufacturer = manufacturerService.get(manufacturerId);
-        car.setManufacturer(manufacturer);
-        carService.create(car);
-        resp.sendRedirect("/cars");
+        try {
+            Car car = new Car();
+            car.setModel(req.getParameter("model"));
+            long manufacturerId = Long.parseLong(req.getParameter("manufacturer_id"));
+            Manufacturer manufacturer = manufacturerService.get(manufacturerId);
+            car.setManufacturer(manufacturer);
+            carService.create(car);
+            resp.sendRedirect("/cars");
+        } catch (DataCreateUpdateException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

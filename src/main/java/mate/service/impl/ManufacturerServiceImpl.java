@@ -3,6 +3,7 @@ package mate.service.impl;
 import java.util.List;
 import java.util.Optional;
 import mate.dao.ManufacturerDao;
+import mate.exception.DataCreateUpdateException;
 import mate.lib.Inject;
 import mate.lib.Service;
 import mate.model.Manufacturer;
@@ -14,11 +15,11 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     private ManufacturerDao manufacturerDao;
     
     @Override
-    public Manufacturer create(Manufacturer manufacturer) {
+    public Manufacturer create(Manufacturer manufacturer) throws DataCreateUpdateException {
         Optional<Manufacturer> optionalManufacturer =
                 manufacturerDao.getManufacturerByName(manufacturer.getName());
         if (optionalManufacturer.isPresent()) {
-            throw new RuntimeException("Manufacturer with same Name already exist");
+            throw new DataCreateUpdateException("Manufacturer with same Name already exist");
         }
         return manufacturerDao.create(manufacturer);
     }
@@ -26,7 +27,7 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     @Override
     public Manufacturer get(Long id) {
         Optional<Manufacturer> optionalManufacturer = manufacturerDao.get(id);
-        if (!optionalManufacturer.isPresent()) {
+        if (optionalManufacturer.isEmpty()) {
             throw new RuntimeException("Don't exist Manufacturer dy id " + id);
         }
         return optionalManufacturer.get();
@@ -38,13 +39,13 @@ public class ManufacturerServiceImpl implements ManufacturerService {
     }
 
     @Override
-    public Manufacturer update(Manufacturer manufacturer) {
+    public Manufacturer update(Manufacturer manufacturer) throws DataCreateUpdateException {
 
         Optional<Manufacturer> optionalManufacturer =
                 manufacturerDao.getManufacturerByName(manufacturer.getName());
         if (optionalManufacturer.isPresent()
                 && !optionalManufacturer.get().getId().equals(manufacturer.getId())) {
-            throw new RuntimeException("Manufacturer with same Name already exist");
+            throw new DataCreateUpdateException("Manufacturer with same Name already exist");
         }
         return manufacturerDao.update(manufacturer);
     }
