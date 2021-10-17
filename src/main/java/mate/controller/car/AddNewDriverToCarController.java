@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import mate.exception.DataException;
 import mate.lib.Injector;
 import mate.model.Car;
 import mate.model.Driver;
@@ -28,11 +29,18 @@ public class AddNewDriverToCarController extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Long carId = Long.valueOf(req.getParameter("car_id"));
-        Long driverId = Long.valueOf(req.getParameter("driver_id"));
-        Car car = carService.get(carId);
-        Driver driver = driverService.get(driverId);
-        carService.addDriverToCar(driver, car);
-        resp.sendRedirect("/cars");
+        try {
+            Long carId = Long.valueOf(req.getParameter("car_id"));
+            Long driverId = Long.valueOf(req.getParameter("driver_id"));
+            Car car = null;
+            car = carService.get(carId);
+            Driver driver = driverService.get(driverId);
+            carService.addDriverToCar(driver, car);
+            resp.sendRedirect("/cars");
+        } catch (DataException e) {
+            req.setAttribute("errorMsg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/car/add_new_driver_to_car.jsp")
+                    .forward(req, resp);
+        }
     }
 }

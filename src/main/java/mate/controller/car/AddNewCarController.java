@@ -5,7 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mate.exception.DataCreateUpdateException;
+import mate.exception.DataException;
 import mate.lib.Injector;
 import mate.model.Car;
 import mate.model.Manufacturer;
@@ -36,7 +36,7 @@ public class AddNewCarController extends HttpServlet {
             car.setManufacturer(manufacturer);
             carService.create(car);
             resp.sendRedirect("/cars");
-        } catch (DataCreateUpdateException e) {
+        } catch (DataException e) {
             throw new RuntimeException(e.getMessage());
         }
     }

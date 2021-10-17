@@ -14,7 +14,7 @@
         <label>Driver Name</label><br>
         <input type="text" name="name" required><br>
         <label>License Number (format must by like AA-1234)</label><br>
-        <input type="text" name="license_number" required><br><br>
+        <input type="text" name="license_number (mast by unique)" required><br><br>
         <label>Driver login</label><br>
         <input type="text" name="login" required><br>
         <label>Driver password</label><br>

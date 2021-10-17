@@ -3,6 +3,7 @@ package mate.service.impl;
 import java.util.List;
 import java.util.Optional;
 import mate.dao.CarDao;
+import mate.exception.DataException;
 import mate.lib.Inject;
 import mate.lib.Service;
 import mate.model.Car;
@@ -20,10 +21,10 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car get(Long id) {
+    public Car get(Long id) throws DataException {
         Optional<Car> optionalCar = carDao.get(id);
         if (optionalCar.isEmpty()) {
-            throw new RuntimeException("Don't exist Manufacturer dy id " + id);
+            throw new DataException("Don't exist Car dy id " + id);
         }
         return optionalCar.get();
     }

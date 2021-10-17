@@ -11,7 +11,7 @@
     <h1>For add new Manufacturer fill in the forms below</h1>
     <h3 style="color: red">${errorMsg}</h3>
     <form method="post" action="${pageContext.request.contextPath}/manufacturers/add">
-        <label>Manufacturer Name</label><br>
+        <label>Manufacturer Name (must by unique)</label><br>
         <input type="text" name="name" required><br>
         <label>Country</label><br>
         <input type="text" name="country" required><br><br>

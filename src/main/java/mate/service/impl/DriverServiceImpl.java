@@ -3,7 +3,7 @@ package mate.service.impl;
 import java.util.List;
 import java.util.Optional;
 import mate.dao.DriverDao;
-import mate.exception.DataCreateUpdateException;
+import mate.exception.DataException;
 import mate.lib.Inject;
 import mate.lib.Service;
 import mate.model.Driver;
@@ -15,20 +15,20 @@ public class DriverServiceImpl implements DriverService {
     private DriverDao driverDao;
 
     @Override
-    public Driver create(Driver driver) throws DataCreateUpdateException {
+    public Driver create(Driver driver) throws DataException {
         Optional<Driver> optionalDriver =
                 driverDao.findByLicenseNumber(driver.getLicenseNumber());
         if (optionalDriver.isPresent()) {
-            throw new DataCreateUpdateException("Driver with same License Number already exist");
+            throw new DataException("Driver with same License Number already exist");
         }
         return driverDao.create(driver);
     }
 
     @Override
-    public Driver get(Long id) {
+    public Driver get(Long id) throws DataException {
         Optional<Driver> optionalDriver = driverDao.get(id);
         if (optionalDriver.isEmpty()) {
-            throw new RuntimeException("Don't exist Manufacturer dy id " + id);
+            throw new DataException("Don't exist Driver dy id " + id);
         }
         return optionalDriver.get();
     }
@@ -39,11 +39,11 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Driver update(Driver driver) throws DataCreateUpdateException {
+    public Driver update(Driver driver) throws DataException {
         Optional<Driver> optionalDriver =
                 driverDao.findByLicenseNumber(driver.getLicenseNumber());
         if (optionalDriver.isPresent() && !optionalDriver.get().getId().equals(driver.getId())) {
-            throw new DataCreateUpdateException("Driver with same License Number already exist");
+            throw new DataException("Driver with same License Number already exist");
         }
         return driverDao.update(driver);
     }
