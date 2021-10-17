@@ -37,7 +37,9 @@ public class AddNewCarController extends HttpServlet {
             carService.create(car);
             resp.sendRedirect("/cars");
         } catch (DataException e) {
-            throw new RuntimeException(e.getMessage());
+            req.setAttribute("errorMsg", e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/views/car/add_new_car.jsp")
+                    .forward(req, resp);
         }
     }
 }
